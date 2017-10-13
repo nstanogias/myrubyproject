@@ -1,0 +1,11 @@
+<%= render 'shared/page_title', title: "showing all movies" %>
+
+<div align="center">
+  <%= will_paginate %>
+</div>
+
+<%= render 'movie', obj: @movies %>
+
+<div align="center">
+  <%= will_paginate %>
+</div>

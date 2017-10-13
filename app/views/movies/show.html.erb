@@ -1,0 +1,29 @@
+<%= render 'shared/page_title', title: @movie.name %>
+
+<div class="well col-md-8 col-md-offset-2">
+  <h4 class="center description"><strong>Description: </strong></h4>
+  <hr />
+  <%= simple_format(@movie.description) %>
+  <hr />
+  <div class="pull-right">
+    <p class="center">
+      <em>Created by:</em>
+    </p>
+    <p class="center">
+      <%= link_to gravatar_for(@movie.user), movies_path %>
+    </p>
+    <p class="center">
+      <small><%= @movie.user.username.capitalize %></small>
+      <div class="pull-right"><%= time_ago_in_words(@movie.created_at) %> ago</div>
+    </p>
+  </div>
+
+  <div class="movie-actions">
+  <% if logged_in? && (current_user == @movie.user || current_user.admin?)%>
+    <%= link_to "Edit this movie", edit_movie_path(@movie), class: 'btn btn-xs btn-warning' %>
+    <%= link_to "Delete this movie", movie_path(@movie), method: :delete, data: { confirm: "Are you sure you want to delete?" },
+                                    class: "btn btn-xs btn-danger" %>
+  <% end %>
+  <%= link_to "Return to movies listing", movies_path, class: "btn btn-xs btn-primary" %>
+</div>
+</div>
