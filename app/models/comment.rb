@@ -4,4 +4,5 @@ class Comment < ApplicationRecord
   belongs_to :movie
   validates :user_id, presence: true
   validates :movie_id, presence: true
+  default_scope -> { order(updated_at: :desc)}
 end
