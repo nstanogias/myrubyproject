@@ -6,8 +6,9 @@ class CommentsController < ApplicationController
     @comment = @movie.comments.build(comment_params)
     @comment.user = current_user
     if @comment.save
-      flash[:success] = "Comment was created successfully"
-      redirect_to movie_path(@movie)
+      ActionCable.server.broadcast "comments", render(partial: 'comments/comment', object: @comment)
+      # flash[:success] = "Comment was created successfully"
+      # redirect_to movie_path(@movie)
     else
       flash[:danger] = "Comment was not created"
       redirect_to :back

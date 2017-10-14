@@ -20,6 +20,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       session[:user_id] = @user_id
+      cookies.signed[:user_id] = @user_id
       flash[:success] = "Welcome #{@user.username} to MyMovies App!"
       redirect_to user_path(@user)
     else
@@ -70,5 +71,5 @@ class UsersController < ApplicationController
     redirect_to root_path
     end
   end
-  
+
 end
