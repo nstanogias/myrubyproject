@@ -6,14 +6,15 @@
   </div>
 </div>
 
-<h4 align="center"><%= @user.username %>'s movies</h4>
-
-<div align="center">
-  <%= will_paginate @user_movies %>
-</div>
-
-<%= render 'movies/movie', obj: @user_movies %>
-
-<div align="center">
-  <%= will_paginate @user_movies %>
-</div>
+<% if @user.movies.count != 0 %>
+  <h4 align="center"><%= @user.username %>'s movies</h4>
+  <div align="center">
+    <%= will_paginate @user_movies %>
+  </div>
+  <%= render 'movies/movie', obj: @user_movies %>
+  <div align="center">
+    <%= will_paginate @user_movies %>
+  </div>
+<% else %>
+  <h4 align="center">No movies yet!</h4>
+<% end %>

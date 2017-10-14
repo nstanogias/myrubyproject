@@ -9,6 +9,8 @@ class MoviesController < ApplicationController
   end
 
   def show
+    @comment = Comment.new
+    @comments = @movie.comments.paginate(page: params[:page], per_page: 5)
   end
 
   def new
@@ -48,7 +50,7 @@ class MoviesController < ApplicationController
   private
 
   def movie_params
-    params.require(:movie).permit(:name, :description)
+    params.require(:movie).permit(:name, :description, genre_ids:[])
   end
 
   def set_movie

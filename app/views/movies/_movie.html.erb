@@ -1,16 +1,19 @@
 <% obj.each do |movie| %>
   <div class="row">
     <div class="col-md-2">
-      <section class="actor_info center">
+      <section class="user_info center">
         <%= gravatar_for(movie.user, size: 120) %>
       </section>
     </div>
     <div class="col-md-8 well">
       <h4><%= link_to movie.name, movie_path(movie) %></h4>
       <p><%= truncate(movie.description, length: 150) %></p>
+      <% if movie.genres.any? %>
+        <p>Genres: <%= render movie.genres %> </p>
+      <% end %>
       <p>
         <span class="quiet"><small>Created
-        <%= time_ago_in_words(movie.created_at) %> ago</small></span>
+        <%= time_ago_in_words(movie.created_at) %> ago by <%= movie.user.username.capitalize %> | <%= pluralize(movie.comments.count, 'Comment') %></small></span>
       </p>
       <% if logged_in? && (current_user == movie.user || current_user.admin?) %>
         <div class="movie-actions">

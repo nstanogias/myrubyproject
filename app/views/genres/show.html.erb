@@ -1,0 +1,13 @@
+<%= render 'shared/page_title', title: "#{@genre.name}" %>
+<% if @genre.movies.count != 0 %>
+  <h4 align="center">Movies belonging to category <%= @genre.name %></h4>
+  <div align="center">
+    <%= will_paginate @genre_movies %>
+  </div>
+  <%= render 'movies/movie', obj: @genre_movies %>
+  <div align="center">
+    <%= will_paginate @genre_movies %>
+  </div>
+<% else %>
+  <h4 align="center">No movies yet!</h4>
+<% end %>

@@ -11,7 +11,7 @@ class UsersEditTest < ActionDispatch::IntegrationTest
     sign_in_as(@user, "password")
     get edit_user_path(@user)
     assert_template 'users/edit'
-    patch user_path(@user), params: { user: { username: " ", email: "mashrur@example.com" } }
+    patch user_path(@user), params: { user: { username: " ", email: "nikos@example.com" } }
     assert_template 'users/edit'
     assert_select 'h2.panel-title'
     assert_select 'div.panel-body'
@@ -21,13 +21,13 @@ class UsersEditTest < ActionDispatch::IntegrationTest
     sign_in_as(@user, "password")
     get edit_user_path(@user)
     assert_template 'users/edit'
-    patch user_path(@user), params: { user: { username: "mashrur1",
-                                email: "mashrur1@example.com" } }
+    patch user_path(@user), params: { user: { username: "nikos1",
+                                email: "nikos1@example.com" } }
     assert_redirected_to user_path(@user)
     assert_not flash.empty?
     @user.reload
-    assert_match "mashrur1", @user.username
-    assert_match "mashrur1@example.com", @user.email
+    assert_match "nikos1", @user.username
+    assert_match "nikos1@example.com", @user.email
   end
 
 end
