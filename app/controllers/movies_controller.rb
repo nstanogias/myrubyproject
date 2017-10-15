@@ -1,8 +1,9 @@
 class MoviesController < ApplicationController
 
-  before_action :set_movie, only: [:show, :edit, :update, :destroy]
-  before_action :require_user, except: [:index, :show]
+  before_action :set_movie, only: [:show, :edit, :update, :destroy, :like]
+  before_action :require_user, except: [:index, :show, :like]
   before_action :require_same_user, only: [:edit, :update, :destroy]
+  before_action :require_user_like, only: [:like]
 
   def index
     @movies = Movie.paginate(page: params[:page], per_page: 5)
@@ -47,6 +48,17 @@ class MoviesController < ApplicationController
     redirect_to movies_path
   end
 
+  def like
+    like = Like.create(like: params[:like], user: current_user, movie: @movie)
+    if like.valid?
+      flash[:success] = "Your selection was succesful"
+      redirect_back fallback_location: root_path
+    else
+      flash[:danger] = "You can only like/dislike a movie once"
+      redirect_back fallback_location: root_path
+    end
+  end
+
   private
 
   def movie_params
@@ -55,6 +67,13 @@ class MoviesController < ApplicationController
 
   def set_movie
     @movie = Movie.find(params[:id])
+  end
+
+  def require_user_like
+    if !logged_in?
+      flash[:danger] = "You must be logged in to perform that action"
+      redirect_to :back
+    end
   end
 
   def require_same_user

@@ -5,6 +5,9 @@ Rails.application.routes.draw do
 	resources :users, except: [:new]
 	resources :movies do
 		resources :comments, only: [:create]
+		member do
+    	post 'like'
+  	end
 	end
 
 	get '/login', to: 'sessions#new'

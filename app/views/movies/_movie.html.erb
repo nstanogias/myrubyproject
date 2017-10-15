@@ -17,15 +17,21 @@
       </p>
       <% if logged_in? && (current_user == movie.user || current_user.admin?) %>
         <div class="movie-actions">
-          <%= link_to "Edit this movie",
-                      edit_movie_path(movie),
-                              class: "btn btn-xs btn-warning" %>
-          <%= link_to "Delete this movie", movie_path(movie),
-                                  method: :delete,
-      data: { confirm: "Are you sure you want to delete this movie?" },
+          <%= link_to "Edit this movie", edit_movie_path(movie), class: "btn btn-xs btn-warning" %>
+          <%= link_to "Delete this movie", movie_path(movie), method: :delete, data: { confirm: "Are you sure you want to delete this movie?" },
                                   class: "btn btn-xs btn-danger" %>
         </div>
       <% end %>
+      <div class="row">
+        <div class="pull-right liking">
+          <%= link_to like_movie_path(movie, like: true), method: :post do %>
+            <i class="glyphicon glyphicon-thumbs-up"></i>
+          <% end %> <%= movie.thumbs_up_total %> ||
+          <%= link_to like_movie_path(movie, like: false), method: :post do %>
+            <i class="glyphicon glyphicon-thumbs-down"></i>
+          <% end %> <%= movie.thumbs_down_total %>
+        </div>
+      </div>
     </div>
   </div>
 <% end %>
